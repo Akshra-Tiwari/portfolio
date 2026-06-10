@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#a78bfa"/>
+      <stop offset="50%"  stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#c4b5fd"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect width="32" height="32" rx="8" fill="#0a0a0b"/>
+  <rect width="32" height="32" rx="8" fill="url(#g)" fill-opacity="0.2"/>
+  <!-- Border -->
+  <rect x="0.5" y="0.5" width="31" height="31" rx="7.5" fill="none" stroke="url(#g)" stroke-opacity="0.4"/>
+  <!-- AT monogram -->
+  <text
+    x="16"
+    y="22"
+    text-anchor="middle"
+    font-family="system-ui, sans-serif"
+    font-weight="700"
+    font-size="14"
+    fill="url(#g)"
+  >AT</text>
+</svg>

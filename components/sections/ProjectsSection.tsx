@@ -1,0 +1,230 @@
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { ExternalLink, Github, ArrowRight, Zap, Check, Star } from 'lucide-react'
+import { projects } from '@/lib/data'
+import Reveal, { SectionLabel } from '@/components/ui/Reveal'
+
+export default function ProjectsSection() {
+  const [hovered, setHovered] = useState<string | null>(null)
+
+  // Featured (resume projects) shown first, learning projects below
+  const featured = projects.filter(p => p.featured)
+  const learning = projects.filter(p => !p.featured)
+
+  return (
+    <section id="projects" className="py-28 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-purple-900/[0.03] blur-[150px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Header */}
+        <div className="max-w-2xl mb-20">
+          <SectionLabel>Projects</SectionLabel>
+          <Reveal delay={0.1}>
+            <h2 className="section-title text-white mb-4">
+              Things I&apos;ve
+              <br />
+              <span className="text-white/40">shipped.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <p className="text-white/50">
+              Five projects, all live and deployed. The first two are the most
+              technically complex — the rest show where I started.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Featured projects */}
+        <div className="space-y-6 mb-16">
+          {featured.map((project, idx) => (
+            <Reveal key={project.id} delay={idx * 0.15}>
+              <motion.div
+                onHoverStart={() => setHovered(project.id)}
+                onHoverEnd={() => setHovered(null)}
+                className="relative rounded-2xl border overflow-hidden transition-all duration-500"
+                style={{
+                  background: hovered === project.id
+                    ? `linear-gradient(135deg, ${project.accentColor} 0%, rgba(255,255,255,0.01) 100%)`
+                    : 'rgba(255,255,255,0.02)',
+                  borderColor: hovered === project.id ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.07)',
+                }}
+              >
+                <div className="relative p-8 lg:p-10">
+                  <div className="grid lg:grid-cols-5 gap-8 items-start">
+
+                    {/* Left: info */}
+                    <div className="lg:col-span-3">
+                      <div className="flex items-start justify-between gap-4 mb-6">
+                        <div>
+                          <div className="flex items-center gap-3 mb-2">
+                            <span
+                              className="text-[10px] font-medium uppercase tracking-widest px-2.5 py-1 rounded-full border flex items-center gap-1"
+                              style={{
+                                color: project.color,
+                                borderColor: `${project.color}40`,
+                                backgroundColor: `${project.color}10`,
+                              }}
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                              Live
+                            </span>
+                            <span className="text-[10px] text-white/30 font-mono">{project.year}</span>
+                          </div>
+                          <h3 className="text-2xl font-bold font-display text-white mb-1">{project.title}</h3>
+                          <p className="text-sm text-white/40">{project.subtitle}</p>
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${project.title} GitHub repository`}
+                            className="w-9 h-9 glass border border-white/[0.1] rounded-xl flex items-center justify-center text-white/50 hover:text-white transition-colors"
+                          >
+                            <Github size={16} />
+                          </a>
+                          <a
+                            href={project.demo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${project.title} live demo`}
+                            className="w-9 h-9 rounded-xl flex items-center justify-center text-white transition-colors"
+                            style={{ backgroundColor: project.color }}
+                          >
+                            <ExternalLink size={15} />
+                          </a>
+                        </div>
+                      </div>
+
+                      <p className="text-white/55 text-sm leading-relaxed mb-6">{project.description}</p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {project.tech.map(tech => (
+                          <span key={tech} className="text-xs px-2.5 py-1 glass border border-white/[0.08] rounded-lg text-white/50">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Right: features */}
+                    <div className="lg:col-span-2">
+                      <div className="glass border border-white/[0.06] rounded-xl p-5">
+                        <div className="flex items-center gap-2 mb-4">
+                          <Zap size={13} style={{ color: project.color }} />
+                          <span className="text-xs font-medium text-white/50 uppercase tracking-wider">What it does</span>
+                        </div>
+                        <ul className="space-y-3">
+                          {project.features.map(feature => (
+                            <li key={feature} className="flex items-start gap-3">
+                              <div
+                                className="w-4 h-4 rounded flex-shrink-0 flex items-center justify-center mt-0.5"
+                                style={{ backgroundColor: `${project.color}20` }}
+                              >
+                                <Check size={9} style={{ color: project.color }} />
+                              </div>
+                              <span className="text-xs text-white/50 leading-relaxed">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group mt-5 flex items-center justify-between w-full px-4 py-3 rounded-lg text-xs font-medium text-white/70 hover:text-white transition-colors border border-white/[0.08] hover:border-white/[0.18]"
+                        >
+                          <span>Open Live Demo</span>
+                          <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+                        </a>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Learning projects — smaller grid */}
+        <Reveal delay={0.1}>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-px flex-1 bg-white/[0.05]" />
+            <span className="text-xs text-white/30 uppercase tracking-widest">Earlier projects</span>
+            <div className="h-px flex-1 bg-white/[0.05]" />
+          </div>
+        </Reveal>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {learning.map((project, idx) => (
+            <Reveal key={project.id} delay={idx * 0.1}>
+              <motion.div
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                className="glass border border-white/[0.07] rounded-2xl p-6 hover:border-white/[0.14] transition-colors"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <span
+                      className="text-[10px] font-mono text-white/30 mb-2 block"
+                    >
+                      {project.year}
+                    </span>
+                    <h3 className="font-semibold text-white font-display">{project.title}</h3>
+                    <p className="text-xs text-white/40 mt-0.5">{project.subtitle}</p>
+                  </div>
+                  <div className="flex gap-1.5">
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${project.title} GitHub`}
+                      className="w-8 h-8 glass border border-white/[0.08] rounded-lg flex items-center justify-center text-white/40 hover:text-white transition-colors"
+                    >
+                      <Github size={14} />
+                    </a>
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${project.title} demo`}
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-colors"
+                      style={{ backgroundColor: `${project.color}90` }}
+                    >
+                      <ExternalLink size={13} />
+                    </a>
+                  </div>
+                </div>
+
+                <p className="text-xs text-white/45 leading-relaxed mb-4">{project.description}</p>
+
+                <div className="flex flex-wrap gap-1.5">
+                  {project.tech.map(tech => (
+                    <span key={tech} className="text-[10px] px-2 py-0.5 glass border border-white/[0.06] rounded text-white/35">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* GitHub CTA */}
+        <Reveal delay={0.3} className="mt-12 text-center">
+          <a
+            href="https://github.com/Akshra-Tiwari"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white/70 transition-colors group"
+          >
+            <Github size={16} />
+            <span>All repositories on GitHub</span>
+            <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+          </a>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
