@@ -5,7 +5,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion'
 
 export default function CustomCursor() {
   const [visible, setVisible] = useState(false)
-  const [clicking, setClicking] = useState(false)
+  
   const mouseX = useMotionValue(-100)
   const mouseY = useMotionValue(-100)
   const springX = useSpring(mouseX, { stiffness: 100, damping: 20 })
@@ -20,16 +20,16 @@ export default function CustomCursor() {
       mouseY.set(e.clientY)
       setVisible(true)
     }
-    const down = () => setClicking(true)
-    const up = () => setClicking(false)
+    
+    
 
     window.addEventListener('mousemove', move)
-    window.addEventListener('mousedown', down)
-    window.addEventListener('mouseup', up)
+    
+    
     return () => {
       window.removeEventListener('mousemove', move)
-      window.removeEventListener('mousedown', down)
-      window.removeEventListener('mouseup', up)
+      
+      
     }
   }, [mouseX, mouseY])
 
