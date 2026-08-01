@@ -132,7 +132,7 @@ export default function DSASection() {
                     'Trees & Recursion',
                     'Stacks & Queues',
                     'Dynamic Programming',
-                  ].map((topic, i) => (
+                  ].map((topic) => (
                     <div key={topic} className="flex items-center gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-purple-500/60 flex-shrink-0" />
                       <span className="text-xs text-white/50">{topic}</span>
@@ -167,7 +167,7 @@ export default function DSASection() {
           <div className="glass border border-white/[0.07] rounded-2xl p-8">
             <h3 className="font-semibold text-white font-display mb-6">Topic breakdown</h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {dsaStats.topics.map((topic, i) => (
+              {dsaStats.topics.map((topic) => (
                 <motion.div
                   key={topic.name}
                   initial={{ opacity: 0, x: -10 }}
