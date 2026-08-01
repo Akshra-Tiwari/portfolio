@@ -2,7 +2,7 @@
 
 import { useInView } from 'react-intersection-observer'
 import { motion, Variants } from 'framer-motion'
-import { cn } from '@/lib/utils'
+
 
 interface RevealProps {
   children: React.ReactNode
