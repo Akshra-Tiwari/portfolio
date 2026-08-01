@@ -167,7 +167,7 @@ export default function DSASection() {
           <div className="glass border border-white/[0.07] rounded-2xl p-8">
             <h3 className="font-semibold text-white font-display mb-6">Topic breakdown</h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {dsaStats.topics.map((topic) => (
+              {dsaStats.topics.map((topic, i) => (
                 <motion.div
                   key={topic.name}
                   initial={{ opacity: 0, x: -10 }}
