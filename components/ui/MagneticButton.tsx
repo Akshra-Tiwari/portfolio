@@ -1,7 +1,7 @@
 'use client'
 
-import { useRef, useState, MouseEvent } from 'react'
-import { motion, useSpring, useTransform } from 'framer-motion'
+import { useRef, MouseEvent } from 'react'
+import { motion, useSpring } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 interface MagneticButtonProps {
@@ -15,10 +15,6 @@ interface MagneticButtonProps {
   onClick?: () => void
 }
 
-/**
- * A button that subtly moves toward the user's cursor when hovering nearby.
- * Creates that premium "magnetic" interaction popularised by Linear and Raycast.
- */
 export default function MagneticButton({
   children,
   className,
@@ -27,7 +23,6 @@ export default function MagneticButton({
   ...props
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const [hovering, setHovering] = useState(false)
 
   const rawX = useSpring(0, { stiffness: 200, damping: 20 })
   const rawY = useSpring(0, { stiffness: 200, damping: 20 })
@@ -44,24 +39,22 @@ export default function MagneticButton({
   const handleMouseLeave = () => {
     rawX.set(0)
     rawY.set(0)
-    setHovering(false)
   }
 
   return (
     <div
       ref={ref}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovering(true)}
       onMouseLeave={handleMouseLeave}
       className="inline-block"
     >
       <motion.div style={{ x: rawX, y: rawY }}>
         {Tag === 'a' ? (
-          <a className={cn('inline-flex', className)} {...(props as any)}>
+          <a className={cn('inline-flex', className)} {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
             {children}
           </a>
         ) : (
-          <button className={cn('inline-flex', className)} {...(props as any)}>
+          <button className={cn('inline-flex', className)} {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}>
             {children}
           </button>
         )}
